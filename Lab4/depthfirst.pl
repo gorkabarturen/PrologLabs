@@ -22,39 +22,31 @@ initial(state(3,3,1)).
 goal(state(0,0,0)).
 goalpath([Node | _]) :- goal(Node).
 
-move( state( M1, C1, 1),   % Before move
-      state( M2, C1, 0) )  % After move 
-   :- M1 > 1, M2 is M1-2, safe(M2, C1).  % Move two missionaries from right to left
+move( state( M1, C1, 1), state( M2, C1, 0) )    :- 
+    M1 > 1, M2 is M1-2, safe(M2, C1).  % Move two missionaries from right to left
 
-move( state( M1, C1, 0),   % Before move
-      state( M2, C1, 1) )  % After move 
-   :- M1 < 2, M2 is M1+2, safe(M2, C1).  % Move two missionaries from left to right
+move( state( M1, C1, 0),state( M2, C1, 1) )   :-
+    M1 < 2, M2 is M1+2, safe(M2, C1).  % Move two missionaries from left to right
 
-move( state( M1, C1, 1),   % Before move
-      state( M1, C2, 0) )  % After move 
-   :- C1 > 1, C2 is C1-2, safe(M1, C2).  % Move two cannibals from right to left
+move( state( M1, C1, 1),state( M1, C2, 0) )     :-
+    C1 > 1, C2 is C1-2, safe(M1, C2).  % Move two cannibals from right to left
 
-move( state( M1, C1, 0),   % Before move
-      state( M1, C2, 1) )  % After move 
-   :- C1 < 2, C2 is C1+2, safe(M1, C2).  % Move two cannibals from left to right
+move( state( M1, C1, 0), state( M1, C2, 1) )   :- 
+    C1 < 2, C2 is C1+2, safe(M1, C2).  % Move two cannibals from left to right
 
-move( state( M1, C1, 1),   % Before move
-      state( M1, C2, 0) )  % After move 
-   :- C1 > 0, C2 is C1-1, safe(M1, C2).  % Move one cannibal from right to left
+move( state( M1, C1, 1),state( M1, C2, 0) )    :- 
+    C1 > 0, C2 is C1-1, safe(M1, C2).  % Move one cannibal from right to left
 
-move( state( M1, C1, 0),   % Before move
-      state( M1, C2, 1) )  % After move 
-   :- C1 < 3, C2 is C1+1, safe(M1, C2).  % Move one cannibal from left to right
+move( state( M1, C1, 0), state( M1, C2, 1) )   :- 
+    C1 < 3, C2 is C1+1, safe(M1, C2).  % Move one cannibal from left to right
 
-move( state( M1, C1, 1),   % Before move
-      state( M2, C2, 0) )  % After move 
-   :- M1 > 0, M2 is M1-1,  
-      C1 > 0, C2 is C1-1, safe(M2, C2).  % Move cannibal and missionary from right to left
+move( state( M1, C1, 1),state( M2, C2, 0) )   :-
+    M1 > 0, M2 is M1-1,  
+    C1 > 0, C2 is C1-1, safe(M2, C2).  % Move cannibal and missionary from right to left
 
-move( state( M1, C1, 0),   % Before move
-      state( M2, C2, 1) )  % After move 
-   :- M1 < 3, M2 is M1+1,   
-      C1 < 3, C2 is C1+1, safe(M2, C2).  % Move cannibal and missionary from left to right
+move( state( M1, C1, 0), state( M2, C2, 1) )  :-
+    M1 < 3, M2 is M1+1,   
+    C1 < 3, C2 is C1+1, safe(M2, C2).  % Move cannibal and missionary from left to right
 
 % Explanation of the printing
 printsol([X]) :- write('State of the right side of the river'), nl, write('(Number of Missionaries, Number of cannibals, Boat is on the right side of the river)'), nl, write(X),nl.
