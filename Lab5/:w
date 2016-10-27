@@ -1,0 +1,19 @@
+:- use_module(library(clpfd)).
+
+schedule(Containers, Constraints, Tasks) :- 
+    addTasks(Containers, Tasks),
+    write(Tasks).
+    %cumulative(Tasks, [limit(1000000)]).
+
+schedule(Constraints, Tasks) :- 
+    write(Tasks),
+    %cumulative(Tasks, [limit(1000000)]).
+
+addTasks([], Task) :- schedule([],[],Task).
+addTasks([Container | Containers], Task) :- 
+    addContainer(Container, B, M, D),
+    append([task( 0, D, _, M, B )],Task, Tasks),
+    addTasks(Containers, Tasks).
+    
+
+addContainer(container(B,M,D), B, M, D). 
